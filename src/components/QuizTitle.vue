@@ -67,6 +67,7 @@ export default {};
   color: rgb(233, 233, 233);
 }
 .title {
+  margin: 0;
   font-size: 36px;
   @media (min-width: 540px) {
     font-size: 52px;

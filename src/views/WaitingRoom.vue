@@ -43,8 +43,10 @@
         </button>
       </div>
       <div class="wr-inputs">
-        <div class="wr-join" v-if="activeTab === 'join'">Join a room</div>
-        <div class="wr-create" v-if="activeTab === 'create'">create a room</div>
+        <div class="wr-join" v-if="activeTab === 'join'"><join-a-room /></div>
+        <div class="wr-create" v-if="activeTab === 'create'">
+          <create-a-room />
+        </div>
       </div>
     </div>
     <div class="wr-display"></div>
@@ -53,6 +55,8 @@
 
 <script>
 import QuizTitle from "@/components/QuizTitle.vue";
+import CreateARoom from "@/components/CreateARoom.vue";
+import JoinARoom from "@/components/JoinARoom.vue";
 export default {
   name: "WaitingRoom",
   data() {
@@ -61,7 +65,9 @@ export default {
     };
   },
   components: {
-    QuizTitle
+    QuizTitle,
+    CreateARoom,
+    JoinARoom
   },
   methods: {
     setActiveTab(tab) {
@@ -90,34 +96,45 @@ export default {
   -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
   box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
   border-radius: 8px;
+
+  @media (min-width: 1024px) {
+    width: 40%;
+  }
 }
 
 .tabs {
   display: flex;
-  align-items: center;
+  align-items: flex;
 }
 .tab {
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: 10px;
+  padding: 12px;
   background: transparent;
   border: 1px solid rgb(145, 144, 144);
-  opacity: 0.8;
+  opacity: 0.85;
   color: #dedede;
+  cursor: pointer;
+  font-weight: bold;
 }
 .tab--active {
   background: rgb(145, 144, 144);
+  color: #0c0c0c;
+}
+.tab--active svg {
+  fill: #0c0c0c;
 }
 .tab--active:focus {
   outline: none;
 }
 .wr-tab-svg {
   fill: #dedede;
+  margin-right: 5px;
 }
 .wr-inputs {
   background: rgb(145, 144, 144);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 </style>
