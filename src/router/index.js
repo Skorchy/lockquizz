@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Game from "../views/Game.vue";
 import WaitingRoom from "../views/WaitingRoom.vue";
+import Room from "../views/Room.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/waiting",
     name: "WaitingRoom",
     component: WaitingRoom,
+  },
+  {
+    path: "/room/:roomName",
+    name: "Room",
+    component: Room,
   },
   {
     path: "/about",

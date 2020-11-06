@@ -4,9 +4,8 @@
 
 <script>
 export default {
-  name: "Game"
+  name: "Game",
 };
 </script>
 
-<style>
-</style>
+<style></style>

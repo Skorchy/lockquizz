@@ -16,14 +16,14 @@
         />
       </div>
       <div class="car-form-row">
-        <span>Mot De Passe</span>
+        <span>Mot De Passe (min. 3 car.)</span>
         <input
           v-model="roomPw"
           type="password"
           name="room-pw"
           id="room-pw"
           placeholder="Mot de passe"
-          minlength="6"
+          minlength="3"
           required
         />
       </div>
@@ -53,14 +53,14 @@ export default {
       roomOwner: "",
       roomName: "",
       roomPw: "",
-      errorMessage: false
+      errorMessage: false,
     };
   },
   methods: {
     validate() {
       const checking = checkIfRoomExists(this.roomName);
-      checking.then(response => {
-        if (response) {
+      checking.then((response) => {
+        if (response === 0) {
           this.errorMessage = true;
           setTimeout(() => {
             this.errorMessage = false;
@@ -72,8 +72,8 @@ export default {
           });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

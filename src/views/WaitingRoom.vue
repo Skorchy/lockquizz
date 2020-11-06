@@ -61,19 +61,19 @@ export default {
   name: "WaitingRoom",
   data() {
     return {
-      activeTab: "join"
+      activeTab: "join",
     };
   },
   components: {
     QuizTitle,
     CreateARoom,
-    JoinARoom
+    JoinARoom,
   },
   methods: {
     setActiveTab(tab) {
       this.activeTab = tab;
-    }
-  }
+    },
+  },
 };
 </script>
 
