@@ -1,45 +1,17 @@
 <template>
-  <div class="room-container" v-if="$store.state.roomInfos">
-    <div class="room-infos"></div>
-    <span style="color:white"
-      >Bienvenue dans la room : {{ $store.state.roomInfos.name }}</span
-    ><br />
-    <span style="color:white">Room ID : {{ $store.state.roomInfos.id }}</span>
-    <br />
-    <span style="color:white"
-      >Room Pw : {{ $store.state.roomInfos.password }}</span
-    >
-    <br />
-    <span style="color:white"
-      >Room Owner : {{ $store.state.roomInfos.owner }}</span
-    >
-
-    <div v-for="question in quizQuestions" :key="question.question">
-      <img :src="question.imgUrl" v-if="question.imgUrl" />
-      <audio
-        autoplay
-        controls
-        :src="question.audioUrl"
-        v-if="question.audioUrl"
-      />
-      <p
-        class="question"
-        :class="[
-          {
-            easy: question.difficulty === 'easy',
-            medium: question.difficulty === 'medium',
-            hard: question.difficulty === 'hard',
-          },
-        ]"
-        style="color:white"
-      >
-        {{ question.question }}
-      </p>
-    </div>
+  <div v-if="$store.state.roomInfos">
+    <room-infos :roomInfos="$store.state.roomInfos" />
+    <waiting
+      :roomName="$store.state.roomInfos.name"
+      :players="$store.state.roomInfos.players"
+    />
   </div>
 </template>
 
 <script>
+import RoomInfos from "../components/RoomInfos";
+import Waiting from "../components/Waiting";
+
 import { client } from "../services/contentfulHelper";
 import get from "lodash/get";
 
@@ -49,6 +21,10 @@ export default {
       roomName: this.$route.params.roomName,
       quizQuestions: [],
     };
+  },
+  components: {
+    RoomInfos,
+    Waiting,
   },
   methods: {
     fetchRoomInfos() {
@@ -76,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .question {
   border: 1px dashed white;
 }

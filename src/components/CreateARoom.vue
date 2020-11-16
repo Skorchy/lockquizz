@@ -69,6 +69,10 @@ export default {
           const room = createRoom(this.roomName, this.roomPw, this.roomOwner);
           room.then(() => {
             this.$router.push({ path: `/room/${this.roomName}` });
+            this.$store.dispatch("setPlayer", {
+              name: this.roomOwner,
+              role: "owner",
+            });
           });
         }
       });

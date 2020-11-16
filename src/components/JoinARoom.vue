@@ -57,6 +57,10 @@ export default {
     async connect() {
       try {
         await joinRoom(this.roomName, this.roomPw, this.playerNickname);
+        this.$store.dispatch("setPlayer", {
+          name: this.playerNickname,
+          role: "player",
+        });
         this.$router.push({ path: `/room/${this.roomName}` });
       } catch (error) {
         this.errorMessage = "Connexion refusée";
