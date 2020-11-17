@@ -30,16 +30,13 @@ export default new Vuex.Store({
     async fetchRoomInfos(context, payload) {
       const roomName = payload;
 
-      const roomSnapshot = await db
-        .collection("rooms")
+      db.collection("rooms")
         .doc(roomName)
-        .get();
+        .onSnapshot((roomSnapshot) => {
+          const roomInfos = roomSnapshot.data();
 
-      if (roomSnapshot.exists) {
-        const roomInfos = roomSnapshot.data();
-
-        context.commit("setRoomInfos", roomInfos);
-      }
+          context.commit("setRoomInfos", roomInfos);
+        });
     },
     setPlayer(context, payload) {
       console.log("payload:", payload);

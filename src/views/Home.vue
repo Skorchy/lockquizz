@@ -20,7 +20,7 @@
         répondre!
       </p>
       <p>
-        Àprès avoir répondu à toutes les questions, le maître du jeu les
+        Après avoir répondu à toutes les questions, le maître du jeu les
         corrigera (de préférence en live/partage d'écran) afin que tout le monde
         puisse voir ses fautes (et surtout que vous puissiez rigoler des erreurs
         des autres !).
@@ -38,10 +38,11 @@
         </ul>
       </p>
       <p>Amusez vous bien, et puisse le sort vous être favorable !</p>
-    </div>
-    <div class="game-buttons">
+      <div class="game-buttons">
       <router-link to="/waiting"><button type="button">Jouer</button></router-link>
     </div>
+    </div>
+    
   </div>
 </template>
 
@@ -75,38 +76,10 @@ export default {
   font-family: "Grandstander", cursive;
 }
 .colored {
-  background: rgb(131, 58, 180);
-  background: -moz-linear-gradient(
-    90deg,
-    rgb(147, 66, 201) 0%,
-    rgba(253, 29, 29, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(69, 179, 252, 1) 60%,
-    rgb(226, 240, 77) 80%,
-    rgba(69, 252, 73, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    90deg,
-    rgb(157, 70, 216) 0%,
-    rgba(253, 29, 29, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(69, 179, 252, 1) 60%,
-    rgb(228, 241, 77) 80%,
-    rgba(69, 252, 73, 1) 100%
-  );
-  background: linear-gradient(
-    90deg,
-    rgb(164, 72, 224) 0%,
-    rgba(253, 29, 29, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(69, 179, 252, 1) 60%,
-    rgb(231, 245, 78) 80%,
-    rgba(69, 252, 73, 1) 100%
-  );
+  background: #ff9010;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#45fc49",GradientType=1);
 }
 .light-grey {
   color: rgb(233, 233, 233);
@@ -114,14 +87,17 @@ export default {
 .quiz-img {
   width: 50px;
   height: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  
   @media (min-width: 520px) {
     width: 150px;
     height: 150px;
   }
 }
 .rules {
-  border: 2px dashed #b8bac0;
+  background: rgb(14, 14, 14);
+  border: 1px solid rgb(255, 255, 255);
+  color: rgb(202, 201, 201);
   box-sizing: border-box;
   font-family: "Mukta", sans-serif;
   padding: 20px;
@@ -160,59 +136,31 @@ export default {
   width: 18px;
 }
 .game-buttons {
-  margin-bottom: 20px;
+  width: 100%;
+  margin-top:50px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 95%;
 }
 .game-buttons button {
-  background: rgb(131, 58, 180);
-  background: -moz-linear-gradient(
-    90deg,
-    rgb(147, 66, 201) 0%,
-    rgba(253, 29, 29, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(69, 179, 252, 1) 60%,
-    rgb(226, 240, 77) 80%,
-    rgba(69, 252, 73, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    90deg,
-    rgb(157, 70, 216) 0%,
-    rgba(253, 29, 29, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(69, 179, 252, 1) 60%,
-    rgb(228, 241, 77) 80%,
-    rgba(69, 252, 73, 1) 100%
-  );
-  background: linear-gradient(
-    90deg,
-    rgb(164, 72, 224) 0%,
-    rgba(253, 29, 29, 1) 20%,
-    rgba(252, 176, 69, 1) 40%,
-    rgba(69, 179, 252, 1) 60%,
-    rgb(231, 245, 78) 80%,
-    rgba(69, 252, 73, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#45fc49",GradientType=1);
-  border: none;
-  padding: 10px;
-  width: 320px;
-  margin-bottom: 10px;
-  font-family: "Grandstander", cursive;
+  background: #ff9010;
   color: #202124;
+  font-family: "Grandstander", cursive;
   font-size: 24px;
   -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
   -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
   box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+  border: none;
+  padding: 10px;
+  width: 320px;
+  margin-bottom: 10px;
   border-radius: 8px;
 }
 .game-buttons button:focus {
   outline: none;
 }
 .game-buttons button:hover {
-  transform: scale(1.05);
+  background: #ff8f10d3;
 }
 .game-buttons button:active {
   transform: translateY(2px);

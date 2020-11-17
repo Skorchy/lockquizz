@@ -1,10 +1,12 @@
 <template>
-  <div v-if="$store.state.roomInfos">
+  <div class="room" v-if="$store.state.roomInfos">
     <room-infos :roomInfos="$store.state.roomInfos" />
-    <waiting
-      :roomName="$store.state.roomInfos.name"
-      :players="$store.state.roomInfos.players"
-    />
+    <div class="room-waiting">
+      <waiting
+        :roomName="$store.state.roomInfos.name"
+        :players="$store.state.roomInfos.players"
+      />
+    </div>
   </div>
 </template>
 
@@ -53,6 +55,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.room-waiting {
+  background: #0e0e0e;
+  border: 1px solid rgb(255, 255, 255);
+  margin: auto;
+  box-sizing: border-box;
+}
+
 .question {
   border: 1px dashed white;
 }

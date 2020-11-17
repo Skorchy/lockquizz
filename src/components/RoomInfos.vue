@@ -58,8 +58,8 @@ export default {
   justify-content: space-evenly;
   background: rgb(14, 14, 14);
   border: 1px solid rgb(255, 255, 255);
-  opacity: 0.8;
   color: rgb(202, 201, 201);
+  opacity: 0.8;
   font-size: 12px;
 }
 .copy-tooltip {

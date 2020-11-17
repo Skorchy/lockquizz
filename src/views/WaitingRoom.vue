@@ -84,13 +84,12 @@ export default {
   flex-direction: column;
 }
 .wr-title {
-  margin: 20px 0;
-  @media (min-width: 1024px) {
-    margin: 0;
-  }
+  margin-bottom: 50px;
 }
 .wr-pannel {
-  border: 2px solid #b8bac0;
+  border: 1px solid rgb(255, 255, 255);
+  background: rgb(29, 29, 29);
+  color: rgb(255, 255, 255);
   width: 95%;
   -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
   -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
@@ -98,7 +97,7 @@ export default {
   border-radius: 8px;
 
   @media (min-width: 1024px) {
-    width: 40%;
+    width: 60%;
   }
 }
 
@@ -113,28 +112,29 @@ export default {
   justify-content: space-evenly;
   padding: 12px;
   background: transparent;
-  border: 1px solid rgb(145, 144, 144);
+  border: 1px solid rgb(14, 14, 14);
   opacity: 0.85;
-  color: #dedede;
+  color: rgb(194, 194, 194);
   cursor: pointer;
   font-weight: bold;
+  font-size: 30px;
 }
 .tab--active {
-  background: rgb(145, 144, 144);
-  color: #0c0c0c;
+  background: rgb(14, 14, 14);
+  color: #ff9010;
 }
 .tab--active svg {
-  fill: #0c0c0c;
+  fill: #ff9010;
 }
 .tab--active:focus {
   outline: none;
 }
 .wr-tab-svg {
-  fill: #dedede;
+  fill: rgb(255, 255, 255);
   margin-right: 5px;
 }
 .wr-inputs {
-  background: rgb(145, 144, 144);
+  background: rgb(14, 14, 14);
   opacity: 0.85;
 }
 </style>

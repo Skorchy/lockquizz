@@ -33,10 +33,13 @@
           id="room-playerNickname"
           placeholder="Pseudonyme"
           required
+          maxlength="16"
         />
       </div>
-      <div class="jar-form-row">
-        <button type="button" @click="connect()">Go !</button>
+      <div class="jar-form-row jar-form-button">
+        <button type="button" :disabled="isDisabled" @click="connect()">
+          - Rejoindre la salle -
+        </button>
       </div>
     </div>
   </div>
@@ -70,12 +73,78 @@ export default {
       }
     },
   },
+  computed: {
+    isDisabled() {
+      if ((this.playerNickname && this.roomName && this.roomPw) == "") {
+        return true;
+      } else return false;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .jar-container {
-  min-height: 500px;
+  min-height: 400px;
   width: 100%;
+}
+
+.jar-form {
+  width: 75%;
+  margin: auto;
+  padding-top: 50px;
+
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
+}
+
+.jar-form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.jar-form-row span {
+  font-family: "Mukta", sans-serif;
+  font-size: 18px;
+  color: #ff9010;
+  margin-bottom: 3px;
+}
+.jar-form-row input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  background: transparent;
+  color: #e0e0e0;
+}
+
+.jar-form-row input:focus {
+  outline: none;
+}
+
+.jar-form-button {
+  margin: 30px 0;
+}
+.jar-form-row button {
+  margin: auto;
+  width: 95%;
+  border-radius: 5px;
+  border: none;
+  background: #ff9010;
+  color: #202124;
+  font-family: "Mukta", sans-serif;
+  font-size: 24px;
+  -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+  box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+}
+
+.jar-form-row button:disabled {
+  background: grey;
 }
 </style>

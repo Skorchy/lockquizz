@@ -5,7 +5,7 @@
     >
     <div class="car-form">
       <div class="car-form-row">
-        <span>Nom De La Salle</span>
+        <span class="label">Nom de la salle</span>
         <input
           v-model="roomName"
           type="text"
@@ -16,7 +16,7 @@
         />
       </div>
       <div class="car-form-row">
-        <span>Mot De Passe (min. 3 car.)</span>
+        <span>Mot de passe (min. 3 car.)</span>
         <input
           v-model="roomPw"
           type="password"
@@ -34,12 +34,15 @@
           type="text"
           name="room-player-nickname"
           id="room-player-nickname"
-          placeholder="Votre pseudonyme"
+          placeholder="Pseudonyme"
           required
+          maxlength="16"
         />
       </div>
-      <div class="car-form-row">
-        <button type="button" @click="validate()">Go !</button>
+      <div class="car-form-row car-form-button">
+        <button type="button" :disabled="isDisabled" @click="validate()">
+          - Créer la salle -
+        </button>
       </div>
     </div>
   </div>
@@ -78,6 +81,13 @@ export default {
       });
     },
   },
+  computed: {
+    isDisabled() {
+      if ((this.roomOwner && this.roomName && this.roomPw) == "") {
+        return true;
+      } else return false;
+    },
+  },
 };
 </script>
 
@@ -85,5 +95,64 @@ export default {
 .car-container {
   min-height: 500px;
   width: 100%;
+}
+
+.car-form {
+  width: 75%;
+  margin: auto;
+  padding-top: 50px;
+
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
+}
+
+.car-form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.car-form-row span {
+  font-family: "Mukta", sans-serif;
+  font-size: 18px;
+  color: #ff9010;
+  margin-bottom: 3px;
+}
+.car-form-row input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  background: transparent;
+  color: #e0e0e0;
+}
+
+.car-form-row input:focus {
+  outline: none;
+}
+
+.car-form-button {
+  margin: 30px 0;
+}
+.car-form-row button {
+  margin: auto;
+  width: 95%;
+  border-radius: 5px;
+  border: none;
+  background: #ff9010;
+  color: #202124;
+  font-family: "Mukta", sans-serif;
+  font-size: 24px;
+  -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+  box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+}
+
+.car-form-row button:disabled {
+  background: grey;
 }
 </style>
