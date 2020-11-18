@@ -112,7 +112,7 @@ export default {
   justify-content: space-evenly;
   padding: 12px;
   background: transparent;
-  border: 1px solid rgb(14, 14, 14);
+  border: 1px solid #050505;
   opacity: 0.85;
   color: rgb(194, 194, 194);
   cursor: pointer;
@@ -120,7 +120,7 @@ export default {
   font-size: 30px;
 }
 .tab--active {
-  background: rgb(14, 14, 14);
+  background: #050505;
   color: #ff9010;
 }
 .tab--active svg {
@@ -134,7 +134,7 @@ export default {
   margin-right: 5px;
 }
 .wr-inputs {
-  background: rgb(14, 14, 14);
+  background: #050505;
   opacity: 0.85;
 }
 </style>

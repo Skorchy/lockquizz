@@ -56,7 +56,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  background: rgb(14, 14, 14);
+  background: #050505;
   border: 1px solid rgb(255, 255, 255);
   color: rgb(202, 201, 201);
   opacity: 0.8;

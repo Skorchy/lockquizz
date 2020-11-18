@@ -7,7 +7,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
 
 body {
-  background: url("./assets/bg-dark-final.jpg");
+  background: url("./assets/bg-dark-final-test.jpg");
   @media (min-width: 1024px) {
     background-size: cover;
   }

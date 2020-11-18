@@ -8,21 +8,34 @@
         >
       </span>
     </h1>
-    <div class="player-display-table">
-      <h3>Liste des joueurs</h3>
-      <div class="player-display-table-container">
-        <div
-          class="player-display"
-          v-for="player in players"
-          :key="player.playerNickname"
-        >
-          <div class="player-avatar-container">
-            <img class="player-avatar" src="../assets/quiz-final.png" />
-          </div>
-          <div class="player-nickname">
-            <span>{{ capitalize(player.playerNickname) }}</span>
+    <div class="room-waiting-display">
+      <div class="player-display-table">
+        <h3><em style="color:#ff9010; font-style:normal">-</em> Liste des joueurs <em style="color:#ff9010; font-style:normal">-</em> </h3>
+        <div class="player-display-table-container">
+          <div
+            class="player-display"
+            v-for="player in players"
+            :key="player.playerNickname"
+          >
+            <div class="player-avatar-container">
+              <img class="player-avatar" src="../assets/quiz-final.png" />
+            </div>
+            <div class="player-nickname">
+              <span>{{ capitalize(player.playerNickname) }}</span>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="controller">
+        <h3><em style="color:#ff9010; font-style:normal">-</em> Rappel des règles <em style="color:#ff9010; font-style:normal">-</em></h3>
+        <p class="controller-section">
+          <ul>
+            <li>30 questions.</li>
+            <li>30 secondes pour répondre à chaque question.</li>
+            <li>Il en va de soi qu'aucune recherche sur les susnommés Google/Yahoo/Bing/etc.. n'est autorisée.</li>
+            <li>Amusez vous !</li>
+          </ul>
+        </p>
       </div>
     </div>
   </div>
@@ -52,6 +65,10 @@ export default {
 .room-waiting-container {
   color: rgb(202, 201, 201);
   width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
 }
 
 .room-title {
@@ -63,10 +80,11 @@ export default {
   padding: 0 16px;
   font-size: 28px;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 
   @media (min-width: 520px) {
     font-size: 30px;
+    margin-bottom: 120px;
   }
 }
 .room-name {
@@ -103,14 +121,14 @@ export default {
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: 768px) {
-    width: 50%;
+  @media (min-width: 1024px) {
+    width: 40%;
   }
 }
 .player-display-table h3 {
   font-family: "Mukta", sans-serif;
   margin-bottom: 40px;
-  font-size: 24px;
+  font-size: 28px;
 }
 .player-display-table-container {
   display: flex;
@@ -129,5 +147,37 @@ export default {
   color: #0e0e0e;
   font-family: "Mukta", sans-serif;
   font-weight: 600;
+}
+
+.room-waiting-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
+.controller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px dashed white;
+
+  @media (min-width: 1024px) {
+    width: 45%;
+  }
+}
+
+.controller h3 {
+  font-family: "Mukta", sans-serif;
+  margin-bottom: 40px;
+  font-size: 28px;
+}
+
+.controller-section{
+  font-family: "Mukta", sans-serif;
+
 }
 </style>

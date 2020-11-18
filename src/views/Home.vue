@@ -100,6 +100,7 @@ export default {
   color: rgb(202, 201, 201);
   box-sizing: border-box;
   font-family: "Mukta", sans-serif;
+  border-radius: 5px;
   padding: 20px;
   width: 95%;
   font-size: 18px;

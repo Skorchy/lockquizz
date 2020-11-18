@@ -56,10 +56,12 @@ export default {
 
 <style lang="scss" scoped>
 .room-waiting {
-  background: #0e0e0e;
+  background: #050505;
   border: 1px solid rgb(255, 255, 255);
   margin: auto;
   box-sizing: border-box;
+  border-radius: 5px;
+  width: 95%;
 }
 
 .question {
