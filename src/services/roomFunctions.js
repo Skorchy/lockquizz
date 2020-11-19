@@ -1,7 +1,5 @@
 import { db } from "./firebaseServices.js";
 import { v4 as uuidv4 } from "uuid";
-import firebase from "firebase";
-// import { OK } from '../constants'
 
 function checkIfRoomExists(roomName) {
   return db
@@ -25,7 +23,7 @@ function createRoom(roomName, roomPassword, roomOwner) {
       password: roomPassword,
       owner: roomOwner,
       ownerId: roomOwnerId,
-      players: [],
+      players: {},
     });
 }
 
@@ -47,22 +45,27 @@ async function joinRoom(roomName, roomPassword, playerNickname) {
   }
 
   checkConnexion.forEach((doc) => {
-    const playersArray = doc.data().players;
+    const players = doc.data().players;
 
-    for (const player of playersArray) {
+    for (const player in players) {
       if (player.playerNickname === playerNickname) {
         throw Error("Nickname already used");
       }
     }
   });
 
-  const player = { playerNickname: playerNickname, playerId: uuidv4() };
+  const player = {
+    playerNickname: playerNickname,
+    playerIsReady: false,
+  };
+
+  const playerKey = `players.${player.playerNickname}`;
 
   await db
     .collection("rooms")
     .doc(roomName)
     .update({
-      players: firebase.firestore.FieldValue.arrayUnion(player),
+      [playerKey]: player,
     });
 }
 export { createRoom, checkIfRoomExists, joinRoom };

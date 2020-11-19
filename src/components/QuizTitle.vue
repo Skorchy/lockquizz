@@ -18,7 +18,7 @@ export default {};
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-family: "Grandstander", cursive;
+  font-family: "Black Ops One", cursive;
   padding: 20px 0;
   @media (min-width: 540px) {
     padding-top: 40px;

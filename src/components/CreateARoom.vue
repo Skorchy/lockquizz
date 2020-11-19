@@ -93,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 .car-container {
-  min-height: 500px;
+  min-height: 400px;
   width: 100%;
 }
 

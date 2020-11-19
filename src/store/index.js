@@ -12,6 +12,7 @@ export default new Vuex.Store({
     playerInfos: {
       name: "",
       role: "",
+      isReady: false,
     },
     roomInfos: null,
   },
@@ -39,7 +40,6 @@ export default new Vuex.Store({
         });
     },
     setPlayer(context, payload) {
-      console.log("payload:", payload);
       context.commit("setPlayer", payload);
     },
   },

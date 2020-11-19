@@ -30,12 +30,15 @@
         <h3><em style="color:#ff9010; font-style:normal">-</em> Rappel des règles <em style="color:#ff9010; font-style:normal">-</em></h3>
         <p class="controller-section">
           <ul>
-            <li>30 questions.</li>
-            <li>30 secondes pour répondre à chaque question.</li>
-            <li>Il en va de soi qu'aucune recherche sur les susnommés Google/Yahoo/Bing/etc.. n'est autorisée.</li>
-            <li>Amusez vous !</li>
+            <li><img class="questionmark" src="../assets/quiz-final.png"/>30 questions.</li>
+            <li><img class="questionmark" src="../assets/quiz-final.png"/>30 secondes pour répondre à chaque question.</li>
+            <li><img class="questionmark" src="../assets/quiz-final.png"/>Il en va de soi qu'aucune recherche sur les susnommés Google/Yahoo/Bing/etc.. n'est autorisée.</li>
+            <li><img class="questionmark" src="../assets/quiz-final.png"/>Amusez vous !</li>
           </ul>
         </p>
+        <button type="button" v-if="$store.state.playerInfos.role =='owner' ">- Lancer la partie -</button>
+        <button type="button" v-if="$store.state.playerInfos.role =='player' " >- Je suis prêt(e) -</button>
+        <span v-if="$store.state.playerInfos.role =='player' && $store.state.playerInfos.isReady" @click="setReady()">En attente du maître du jeu !</span>
       </div>
     </div>
   </div>
@@ -49,7 +52,7 @@ export default {
       required: true,
     },
     players: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
@@ -57,6 +60,9 @@ export default {
     capitalize(string) {
       return string[0].toUpperCase() + string.slice(1);
     },
+    setReady(){
+      this.$store.dispatch("setReady",{roomName: this.$store.state.roomInfos.name, playerInfos:this.$store.state.playerInfos})
+    }
   },
 };
 </script>
@@ -153,6 +159,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 
   @media (min-width: 1024px) {
     flex-direction: row;
@@ -163,6 +170,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
   border: 2px dashed white;
 
   @media (min-width: 1024px) {
@@ -172,12 +180,36 @@ export default {
 
 .controller h3 {
   font-family: "Mukta", sans-serif;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   font-size: 28px;
 }
 
 .controller-section{
   font-family: "Mukta", sans-serif;
+}
 
+ul{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 0;
+  margin: auto;
+
+  @media(min-width: 1024px){
+    width: 85%;
+  }
+}
+
+ul li{
+  display: flex;
+  font-size: 22px;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+.questionmark {
+  height: 18px;
+  width: 18px;
+  margin-right: 15px;
 }
 </style>
