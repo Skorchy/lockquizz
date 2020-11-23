@@ -11,6 +11,7 @@
           id="room-name"
           placeholder="Nom de la salle"
           required
+          @keyup.enter="connect()"
         />
       </div>
       <div class="jar-form-row">
@@ -22,6 +23,7 @@
           id="room-pw"
           placeholder="Mot de passe"
           required
+          @keyup.enter="connect()"
         />
       </div>
       <div class="jar-form-row">
@@ -34,6 +36,7 @@
           placeholder="Pseudonyme"
           required
           maxlength="16"
+          @keyup.enter="connect()"
         />
       </div>
       <div class="jar-form-row jar-form-button">
@@ -63,6 +66,7 @@ export default {
         this.$store.dispatch("setPlayer", {
           name: this.playerNickname,
           role: "player",
+          isReady: false,
         });
         this.$router.push({ path: `/room/${this.roomName}` });
       } catch (error) {

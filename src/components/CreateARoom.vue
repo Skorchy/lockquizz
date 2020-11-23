@@ -75,6 +75,7 @@ export default {
             this.$store.dispatch("setPlayer", {
               name: this.roomOwner,
               role: "owner",
+              isReady: true,
             });
           });
         }

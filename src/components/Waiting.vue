@@ -10,10 +10,18 @@
     </h1>
     <div class="room-waiting-display">
       <div class="player-display-table">
-        <h3><em style="color:#ff9010; font-style:normal">-</em> Liste des joueurs <em style="color:#ff9010; font-style:normal">-</em> </h3>
+        <h3>
+          <em style="color:#ff9010; font-style:normal">-</em> Liste des joueurs
+          <em style="color:#ff9010; font-style:normal">-</em>
+        </h3>
         <div class="player-display-table-container">
           <div
             class="player-display"
+            :class="{
+              'player-display--ready':
+                $store.state.roomInfos.players[player.playerNickname]
+                  .playerIsReady,
+            }"
             v-for="player in players"
             :key="player.playerNickname"
           >
@@ -27,18 +35,53 @@
         </div>
       </div>
       <div class="controller">
-        <h3><em style="color:#ff9010; font-style:normal">-</em> Rappel des règles <em style="color:#ff9010; font-style:normal">-</em></h3>
-        <p class="controller-section">
-          <ul>
-            <li><img class="questionmark" src="../assets/quiz-final.png"/>30 questions.</li>
-            <li><img class="questionmark" src="../assets/quiz-final.png"/>30 secondes pour répondre à chaque question.</li>
-            <li><img class="questionmark" src="../assets/quiz-final.png"/>Il en va de soi qu'aucune recherche sur les susnommés Google/Yahoo/Bing/etc.. n'est autorisée.</li>
-            <li><img class="questionmark" src="../assets/quiz-final.png"/>Amusez vous !</li>
-          </ul>
-        </p>
-        <button type="button" v-if="$store.state.playerInfos.role =='owner' ">- Lancer la partie -</button>
-        <button type="button" v-if="$store.state.playerInfos.role =='player' " >- Je suis prêt(e) -</button>
-        <span v-if="$store.state.playerInfos.role =='player' && $store.state.playerInfos.isReady" @click="setReady()">En attente du maître du jeu !</span>
+        <h3>
+          <em style="color:#ff9010; font-style:normal">-</em> Rappel des règles
+          <em style="color:#ff9010; font-style:normal">-</em>
+        </h3>
+
+        <ul class="controller-section">
+          <li>
+            <img class="questionmark" src="../assets/quiz-final.png" />30
+            questions.
+          </li>
+          <li>
+            <img class="questionmark" src="../assets/quiz-final.png" />30
+            secondes pour répondre à chaque question.
+          </li>
+          <li>
+            <img class="questionmark" src="../assets/quiz-final.png" />Il en va
+            de soi qu'aucune recherche sur les susnommés Google/Yahoo/Bing/etc..
+            n'est autorisée.
+          </li>
+          <li>
+            <img class="questionmark" src="../assets/quiz-final.png" />Amusez
+            vous !
+          </li>
+        </ul>
+
+        <button type="button" v-if="$store.state.playerInfos.role == 'owner'">
+          - Lancer la partie -
+        </button>
+        <button
+          class="readyButton"
+          type="button"
+          v-if="
+            $store.state.playerInfos.role == 'player' &&
+              !$store.state.playerInfos.isReady
+          "
+          @click="setReady()"
+        >
+          - Je suis prêt(e) -
+        </button>
+        <span
+          class="waiting-message"
+          v-if="
+            $store.state.playerInfos.role == 'player' &&
+              $store.state.playerInfos.isReady
+          "
+          >- En attente du maître du jeu -</span
+        >
       </div>
     </div>
   </div>
@@ -60,9 +103,13 @@ export default {
     capitalize(string) {
       return string[0].toUpperCase() + string.slice(1);
     },
-    setReady(){
-      this.$store.dispatch("setReady",{roomName: this.$store.state.roomInfos.name, playerInfos:this.$store.state.playerInfos})
-    }
+    setReady() {
+      console.log("state :", this.$store.state);
+      this.$store.dispatch("setReady", {
+        roomName: this.$store.state.roomInfos.name,
+        playerNickname: this.$store.state.playerInfos.name,
+      });
+    },
   },
 };
 </script>
@@ -99,6 +146,7 @@ export default {
 }
 
 .player-display {
+  position: relative;
   border: 2px solid rgb(255, 144, 16);
   width: 120px;
   display: flex;
@@ -109,6 +157,10 @@ export default {
   -webkit-box-shadow: 5px 5px 5px 0px rgb(0, 0, 0);
   -moz-box-shadow: 5px 5px 5px 0px rgb(0, 0, 0);
   box-shadow: 5px 5px 5px 0px rgb(0, 0, 0);
+}
+
+.player-display--ready {
+  background: rgb(4, 105, 4);
 }
 .player-avatar {
   margin: auto;
@@ -145,7 +197,7 @@ export default {
   margin-bottom: 50px;
 }
 .player-nickname {
-  background: rgb(255, 144, 16);
+  background: #ff9010;
   width: 100%;
   text-align: center;
 }
@@ -158,6 +210,7 @@ export default {
 .room-waiting-display {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
 
@@ -170,7 +223,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+  height: fit-content;
   border: 2px dashed white;
 
   @media (min-width: 1024px) {
@@ -184,24 +237,24 @@ export default {
   font-size: 28px;
 }
 
-.controller-section{
+.controller-section {
   font-family: "Mukta", sans-serif;
 }
 
-ul{
+ul {
   list-style: none;
   display: flex;
   flex-direction: column;
   width: 80%;
-  padding: 0;
-  margin: auto;
+  padding-bottom: 0;
+  margin-bottom: 50px;
 
-  @media(min-width: 1024px){
+  @media (min-width: 1024px) {
     width: 85%;
   }
 }
 
-ul li{
+ul li {
   display: flex;
   font-size: 22px;
   line-height: 24px;
@@ -211,5 +264,14 @@ ul li{
   height: 18px;
   width: 18px;
   margin-right: 15px;
+}
+
+.readyButton {
+}
+
+.waiting-message {
+  color: #ff9010;
+  font-family: "Black Ops One", cursive;
+  margin-bottom: 50px;
 }
 </style>

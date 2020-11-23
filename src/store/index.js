@@ -24,6 +24,10 @@ export default new Vuex.Store({
     setPlayer(state, payload) {
       state.playerInfos.name = payload.name;
       state.playerInfos.role = payload.role;
+      state.playerInfos.isReady = payload.isReady;
+    },
+    setReady(state) {
+      state.playerInfos.isReady = true;
     },
   },
 
@@ -41,6 +45,19 @@ export default new Vuex.Store({
     },
     setPlayer(context, payload) {
       context.commit("setPlayer", payload);
+    },
+    async setReady(context, payload) {
+      const playerNickname = payload.playerNickname;
+      const roomName = payload.roomName;
+
+      await db
+        .collection("rooms")
+        .doc(roomName)
+        .update({
+          ["players." + playerNickname + ".playerIsReady"]: true,
+        });
+
+      context.commit("setReady");
     },
   },
   modules: {},
