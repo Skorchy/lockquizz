@@ -60,7 +60,11 @@
           </li>
         </ul>
 
-        <button type="button" v-if="$store.state.playerInfos.role == 'owner'">
+        <button
+          type="button"
+          v-if="$store.state.playerInfos.role == 'owner'"
+          @click="launchGame()"
+        >
           - Lancer la partie -
         </button>
         <button
@@ -84,11 +88,22 @@
         >
       </div>
     </div>
+    <quiz-modal type="success" v-if="modalType === 'success'"></quiz-modal>
+    <quiz-modal type="error" v-if="modalType === 'error'"></quiz-modal>
   </div>
 </template>
 
 <script>
+import QuizModal from "@/components/QuizModal.vue";
 export default {
+  data() {
+    return {
+      modalType: "",
+    };
+  },
+  components: {
+    QuizModal,
+  },
   props: {
     roomName: {
       type: String,
@@ -104,11 +119,21 @@ export default {
       return string[0].toUpperCase() + string.slice(1);
     },
     setReady() {
-      console.log("state :", this.$store.state);
       this.$store.dispatch("setReady", {
         roomName: this.$store.state.roomInfos.name,
         playerNickname: this.$store.state.playerInfos.name,
       });
+    },
+    async launchGame() {
+      try {
+        await this.$store.dispatch("launchGame", {
+          roomName: this.roomName,
+        });
+        //this.$store.dispatch("openModal");
+        this.modalType = "success";
+      } catch (error) {
+        this.modalType = "error";
+      }
     },
   },
 };
@@ -146,7 +171,6 @@ export default {
 }
 
 .player-display {
-  position: relative;
   border: 2px solid rgb(255, 144, 16);
   width: 120px;
   display: flex;

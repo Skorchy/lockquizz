@@ -29,6 +29,9 @@ export default new Vuex.Store({
     setReady(state) {
       state.playerInfos.isReady = true;
     },
+    setGameLaunched(state) {
+      state.roomInfos.gameLaunched = true;
+    },
   },
 
   actions: {
@@ -58,6 +61,18 @@ export default new Vuex.Store({
         });
 
       context.commit("setReady");
+    },
+    async launchGame(context, payload) {
+      const roomName = payload.roomName;
+
+      await db
+        .collection("rooms")
+        .doc(roomName)
+        .update({
+          gameLaunched: true,
+        });
+
+      context.commit("setGameLaunched");
     },
   },
   modules: {},

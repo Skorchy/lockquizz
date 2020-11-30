@@ -18,12 +18,15 @@ function createRoom(roomName, roomPassword, roomOwner) {
     .collection("rooms")
     .doc(roomName)
     .set({
+      gameLaunched: false,
       id: roomId,
       name: roomName,
       password: roomPassword,
       owner: roomOwner,
       ownerId: roomOwnerId,
       players: {},
+      questions: [],
+      answers: [],
     });
 }
 
