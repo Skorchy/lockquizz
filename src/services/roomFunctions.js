@@ -18,6 +18,10 @@ function createRoom(roomName, roomPassword, roomOwner) {
     .collection("rooms")
     .doc(roomName)
     .set({
+      modal: {
+        openModal: false,
+        modalType: "",
+      },
       gameLaunched: false,
       id: roomId,
       name: roomName,

@@ -41,7 +41,11 @@ export default {
   right: 0;
   left: 0;
   z-index: 20;
-  background: #050505d7;
+  background: #050505f1;
+  opacity: 1;
+  -webkit-transition: opacity 200ms ease-in;
+  -moz-transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in;
 }
 .modal-content {
   position: absolute;

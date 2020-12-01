@@ -63,6 +63,7 @@
         <button
           type="button"
           v-if="$store.state.playerInfos.role == 'owner'"
+          :disabled="!areAllPlayersReady"
           @click="launchGame()"
         >
           - Lancer la partie -
@@ -88,19 +89,26 @@
         >
       </div>
     </div>
-    <quiz-modal type="success" v-if="modalType === 'success'"></quiz-modal>
-    <quiz-modal type="error" v-if="modalType === 'error'"></quiz-modal>
+    <quiz-modal
+      type="success"
+      v-if="
+        $store.state.roomInfos.modal.openModal == true &&
+          $store.state.roomInfos.modal.modalType == 'success'
+      "
+    ></quiz-modal>
+    <quiz-modal
+      type="error"
+      v-if="
+        $store.state.roomInfos.modal.openModal == true &&
+          $store.state.roomInfos.modal.modalType == 'error'
+      "
+    ></quiz-modal>
   </div>
 </template>
 
 <script>
 import QuizModal from "@/components/QuizModal.vue";
 export default {
-  data() {
-    return {
-      modalType: "",
-    };
-  },
   components: {
     QuizModal,
   },
@@ -112,6 +120,19 @@ export default {
     players: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    areAllPlayersReady() {
+      const players = this.$store.state.roomInfos.players;
+      const playersArray = Object.values(players);
+
+      for (const player of playersArray) {
+        if (!player.playerIsReady) {
+          return false;
+        }
+      }
+      return true;
     },
   },
   methods: {
@@ -129,10 +150,15 @@ export default {
         await this.$store.dispatch("launchGame", {
           roomName: this.roomName,
         });
-        //this.$store.dispatch("openModal");
-        this.modalType = "success";
+        this.$store.dispatch("openModal", {
+          roomName: this.roomName,
+          modalType: "success",
+        });
       } catch (error) {
-        this.modalType = "error";
+        this.$store.dispatch("openModal", {
+          roomName: this.roomName,
+          modalType: "error",
+        });
       }
     },
   },

@@ -18,6 +18,14 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    openModal(state, payload) {
+      state.roomInfos.modal.openModal = true;
+      state.roomInfos.modal.modalType = payload;
+    },
+    closeModal(state) {
+      state.roomInfos.openModal = false;
+      state.roomInfos.modalType = "";
+    },
     setRoomInfos(state, payload) {
       state.roomInfos = payload;
     },
@@ -73,6 +81,36 @@ export default new Vuex.Store({
         });
 
       context.commit("setGameLaunched");
+    },
+    async openModal(context, payload) {
+      const roomName = payload.roomName;
+      const modalType = payload.modalType;
+
+      await db
+        .collection("rooms")
+        .doc(roomName)
+        .update({
+          modal: {
+            openModal: true,
+            modalType: modalType,
+          },
+        });
+      context.commit("openModal", modalType);
+    },
+    async closeModal(context, payload) {
+      const roomName = payload.roomName;
+
+      await db
+        .collection("rooms")
+        .doc(roomName)
+        .update({
+          modal: {
+            openModal: false,
+            modalType: "",
+          },
+        });
+
+      context.commit("closeModal");
     },
   },
   modules: {},
