@@ -2,12 +2,12 @@
   <div class="modal-container">
     <div class="modal-content">
       <div class="modal-success" v-if="type == 'success'">
-        <div
+        <owner-modal
           class="modal-success-owner"
           v-if="$store.state.playerInfos.role == 'owner'"
-        >
-          YEY OWNER
-        </div>
+          :quizNames="quizNames"
+        ></owner-modal>
+
         <div
           class="modal-success-player"
           v-if="$store.state.playerInfos.role == 'player'"
@@ -23,10 +23,15 @@
 </template>
 
 <script>
+import OwnerModal from './OwnerModal.vue';
 export default {
+  components: { OwnerModal },
   props: {
     type: {
       type: String,
+    },
+    quizNames: {
+      type: Array,
       required: true,
     },
   },
@@ -52,9 +57,13 @@ export default {
   border: 1px solid white;
   top: 50%;
   left: 50%;
-  width: 700px;
-  height: 700px;
-  background: white;
+  min-width: 310px;
+  border-radius: 8px;
+  background: #0e0e0e;
   transform: translate(-50%, -50%);
+
+  @media (min-width: 520px) {
+    width: 500px;
+  }
 }
 </style>

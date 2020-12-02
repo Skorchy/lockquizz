@@ -91,6 +91,7 @@
     </div>
     <quiz-modal
       type="success"
+      :quizNames="quizNames"
       v-if="
         $store.state.roomInfos.modal.openModal == true &&
           $store.state.roomInfos.modal.modalType == 'success'
@@ -107,7 +108,7 @@
 </template>
 
 <script>
-import QuizModal from "@/components/QuizModal.vue";
+import QuizModal from '@/components/Modals/QuizModal.vue';
 export default {
   components: {
     QuizModal,
@@ -119,6 +120,10 @@ export default {
     },
     players: {
       type: Object,
+      required: true,
+    },
+    quizNames: {
+      type: Array,
       required: true,
     },
   },
@@ -140,24 +145,24 @@ export default {
       return string[0].toUpperCase() + string.slice(1);
     },
     setReady() {
-      this.$store.dispatch("setReady", {
+      this.$store.dispatch('setReady', {
         roomName: this.$store.state.roomInfos.name,
         playerNickname: this.$store.state.playerInfos.name,
       });
     },
     async launchGame() {
       try {
-        await this.$store.dispatch("launchGame", {
+        await this.$store.dispatch('launchGame', {
           roomName: this.roomName,
         });
-        this.$store.dispatch("openModal", {
+        this.$store.dispatch('openModal', {
           roomName: this.roomName,
-          modalType: "success",
+          modalType: 'success',
         });
       } catch (error) {
-        this.$store.dispatch("openModal", {
+        this.$store.dispatch('openModal', {
           roomName: this.roomName,
-          modalType: "error",
+          modalType: 'error',
         });
       }
     },
@@ -167,7 +172,7 @@ export default {
 
 <style lang="scss" scoped>
 .room-waiting-container {
-  color: rgb(202, 201, 201);
+  color: #cac9c9;
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -176,7 +181,7 @@ export default {
 }
 
 .room-title {
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -192,7 +197,7 @@ export default {
   }
 }
 .room-name {
-  font-family: "Grandstander", cursive;
+  font-family: 'Grandstander', cursive;
   color: #ff9010;
 }
 
@@ -234,7 +239,7 @@ export default {
   }
 }
 .player-display-table h3 {
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
   margin-bottom: 40px;
   font-size: 28px;
 }
@@ -253,7 +258,7 @@ export default {
 }
 .player-nickname span {
   color: #0e0e0e;
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
   font-weight: 600;
 }
 
@@ -282,13 +287,13 @@ export default {
 }
 
 .controller h3 {
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
   margin-bottom: 50px;
   font-size: 28px;
 }
 
 .controller-section {
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
 }
 
 ul {
@@ -321,7 +326,7 @@ ul li {
 
 .waiting-message {
   color: #ff9010;
-  font-family: "Black Ops One", cursive;
+  font-family: 'Black Ops One', cursive;
   margin-bottom: 50px;
 }
 </style>

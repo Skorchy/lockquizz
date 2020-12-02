@@ -5,23 +5,25 @@
       <waiting
         :roomName="$store.state.roomInfos.name"
         :players="$store.state.roomInfos.players"
+        :quizNames="quizNames"
       />
     </div>
   </div>
 </template>
 
 <script>
-import RoomInfos from "../components/RoomInfos";
-import Waiting from "../components/Waiting";
+import RoomInfos from '../components/RoomInfos';
+import Waiting from '../components/Waiting';
 
-import { client } from "../services/contentfulHelper";
-import get from "lodash/get";
+import { client } from '../services/contentfulHelper';
+import get from 'lodash/get';
 
 export default {
   data() {
     return {
       roomName: this.$route.params.roomName,
       quizQuestions: [],
+      quizNames: [],
     };
   },
   components: {
@@ -30,26 +32,35 @@ export default {
   },
   methods: {
     fetchRoomInfos() {
-      this.$store.dispatch("fetchRoomInfos", this.roomName);
+      this.$store.dispatch('fetchRoomInfos', this.roomName);
     },
     async fetchQuizData() {
       const entries = await client.getEntries();
-      console.log("entries items =>", entries.items);
 
       this.quizQuestions = entries.items.map((question) => {
         return {
           question: question.fields.title,
           difficulty: question.fields.difficulty,
-          imgUrl: get(question, "fields.image.fields.file.url"),
-          audioUrl: get(question, "fields.audio.fields.file.url"),
+          imgUrl: get(question, 'fields.image.fields.file.url'),
+          audioUrl: get(question, 'fields.audio.fields.file.url'),
         };
       });
+    },
+    async fetchQuizNames() {
+      const entries = await client.getEntries({
+        content_type: 'quiz',
+      });
+
+      for (const questionName of entries.items) {
+        this.quizNames.push(questionName.fields.title);
+      }
     },
   },
 
   created() {
     this.fetchRoomInfos();
     this.fetchQuizData();
+    this.fetchQuizNames();
   },
 };
 </script>
