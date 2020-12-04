@@ -60,25 +60,24 @@
           </li>
         </ul>
 
-        <button
-          type="button"
+        <quiz-button
+          class="owner-button"
           v-if="$store.state.playerInfos.role == 'owner'"
           :disabled="!areAllPlayersReady"
           @click="launchGame()"
         >
-          - Lancer la partie -
-        </button>
-        <button
-          class="readyButton"
-          type="button"
+          Lancer la partie
+        </quiz-button>
+        <quiz-button
+          class="ready-button"
           v-if="
             $store.state.playerInfos.role == 'player' &&
               !$store.state.playerInfos.isReady
           "
           @click="setReady()"
         >
-          - Je suis prêt(e) -
-        </button>
+          Je suis prêt(e)
+        </quiz-button>
         <span
           class="waiting-message"
           v-if="
@@ -109,9 +108,12 @@
 
 <script>
 import QuizModal from '@/components/Modals/QuizModal.vue';
+import QuizButton from '@/components/UI/QuizButton.vue';
+
 export default {
   components: {
     QuizModal,
+    QuizButton,
   },
   props: {
     roomName: {
@@ -275,6 +277,7 @@ export default {
 }
 
 .controller {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -320,8 +323,21 @@ ul li {
   width: 18px;
   margin-right: 15px;
 }
+.owner-button {
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+.owner-button:disabled {
+  border: 1px solid grey;
+  color: grey;
+}
+.owner-button:disabled:hover {
+  background: #0e0e0e;
+}
 
-.readyButton {
+.ready-button {
+  margin-bottom: 30px;
+  font-size: 18px;
 }
 
 .waiting-message {

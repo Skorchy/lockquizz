@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     CopyToClipboard() {
-      const roomInfos = this.roomInfos.name + " / " + this.roomInfos.password;
+      const roomInfos = this.roomInfos.name + ' / ' + this.roomInfos.password;
 
       navigator.clipboard.writeText(roomInfos).then(() => {
         this.copySucceed = true;
@@ -56,6 +56,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  font-family: 'Varela Round', sans-serif;
   background: #050505;
   border: 1px solid rgb(255, 255, 255);
   color: rgb(202, 201, 201);
@@ -67,20 +68,20 @@ export default {
   text-align: center;
   padding: 8px 0;
   position: absolute;
-  background-color: rgb(17, 163, 17);
-  color: white;
+  background-color: #ff9010;
+  color: #0e0e0e;
   font-weight: bold;
-  font-family: "Grandstander", cursive;
+  font-family: 'Grandstander', cursive;
   border-radius: 3px;
   left: calc(50% - 50px);
   top: 33px;
 }
 .copy-tooltip::after {
-  content: "";
+  content: '';
   height: 8px;
   width: 8px;
   position: absolute;
-  background: rgb(17, 163, 17);
+  background: #ff9010;
   transform: rotate(45deg);
   left: 46px;
   top: -4px;

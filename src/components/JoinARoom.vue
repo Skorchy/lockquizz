@@ -40,46 +40,50 @@
         />
       </div>
       <div class="jar-form-row jar-form-button">
-        <button type="button" :disabled="isDisabled" @click="connect()">
-          - Rejoindre la salle -
-        </button>
+        <quiz-button :disabled="isDisabled" @click="connect()">
+          Rejoindre la salle
+        </quiz-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { joinRoom } from "@/services/roomFunctions.js";
+import { joinRoom } from '@/services/roomFunctions.js';
+import QuizButton from '@/components/UI/QuizButton.vue';
 export default {
   data() {
     return {
-      roomName: "",
-      roomPw: "",
-      playerNickname: "",
-      errorMessage: "",
+      roomName: '',
+      roomPw: '',
+      playerNickname: '',
+      errorMessage: '',
     };
+  },
+  components: {
+    QuizButton,
   },
   methods: {
     async connect() {
       try {
         await joinRoom(this.roomName, this.roomPw, this.playerNickname);
-        this.$store.dispatch("setPlayer", {
+        this.$store.dispatch('setPlayer', {
           name: this.playerNickname,
-          role: "player",
+          role: 'player',
           isReady: false,
         });
         this.$router.push({ path: `/room/${this.roomName}` });
       } catch (error) {
-        this.errorMessage = "Connexion refusée";
+        this.errorMessage = 'Connexion refusée';
         setTimeout(() => {
-          this.errorMessage = "";
+          this.errorMessage = '';
         }, 5000);
       }
     },
   },
   computed: {
     isDisabled() {
-      if ((this.playerNickname && this.roomName && this.roomPw) == "") {
+      if ((this.playerNickname && this.roomName && this.roomPw) == '') {
         return true;
       } else return false;
     },
@@ -109,7 +113,7 @@ export default {
 }
 
 .jar-form-row span {
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
   font-size: 18px;
   color: #ff9010;
   margin-bottom: 3px;
@@ -130,25 +134,12 @@ export default {
 .jar-form-button {
   margin: 30px 0;
 }
-.jar-form-row button {
-  margin: auto;
-  width: 95%;
-  border-radius: 5px;
-  border: none;
-  background: #ff9010;
-  color: #202124;
-  font-family: "Mukta", sans-serif;
-  font-size: 24px;
-  -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-
-  @media (min-width: 768px) {
-    width: 60%;
-  }
-}
 
 .jar-form-row button:disabled {
-  background: grey;
+  border: 1px solid grey;
+  color: grey;
+}
+.jar-form-row button:disabled:hover {
+  background: #0e0e0e;
 }
 </style>

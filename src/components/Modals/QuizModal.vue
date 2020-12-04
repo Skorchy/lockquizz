@@ -3,17 +3,12 @@
     <div class="modal-content">
       <div class="modal-success" v-if="type == 'success'">
         <owner-modal
-          class="modal-success-owner"
           v-if="$store.state.playerInfos.role == 'owner'"
           :quizNames="quizNames"
         ></owner-modal>
-
-        <div
-          class="modal-success-player"
+        <player-modal
           v-if="$store.state.playerInfos.role == 'player'"
-        >
-          YEY PLAYER
-        </div>
+        ></player-modal>
       </div>
       <div class="modal-error" v-if="type == 'error'">
         <span>Une erreur est survenue !</span>
@@ -24,8 +19,10 @@
 
 <script>
 import OwnerModal from './OwnerModal.vue';
+import PlayerModal from './PlayerModal.vue';
+
 export default {
-  components: { OwnerModal },
+  components: { OwnerModal, PlayerModal },
   props: {
     type: {
       type: String,

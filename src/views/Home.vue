@@ -39,7 +39,7 @@
       </p>
       <p>Amusez vous bien, et puisse le sort vous être favorable !</p>
       <div class="game-buttons">
-      <router-link to="/waiting"><button type="button">Jouer</button></router-link>
+      <router-link to="/waiting"><quiz-button class="quiz-button">Jouer</quiz-button></router-link>
     </div>
     </div>
     
@@ -48,11 +48,12 @@
 
 <script>
 import QuizTitle from "@/components/QuizTitle.vue";
+import QuizButton from "@/components/UI/QuizButton.vue"
 
 export default {
   name: "Home",
   components: {
-    QuizTitle
+    QuizTitle, QuizButton
   }
 };
 </script>
@@ -140,30 +141,14 @@ export default {
   width: 100%;
   margin-top:50px;
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  justify-content: center;
 }
-.game-buttons button {
-  background: #ff9010;
-  color: #202124;
-  font-family: "Grandstander", cursive;
-  font-size: 24px;
-  -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  border: none;
-  padding: 10px;
-  width: 320px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
-.game-buttons button:focus {
-  outline: none;
-}
-.game-buttons button:hover {
-  background: #ff8f10d3;
-}
-.game-buttons button:active {
-  transform: translateY(2px);
+
+.quiz-button{
+  width: 200px;
+
+  @media (min-width: 520px){
+    width: 300px;
+  }
 }
 </style>

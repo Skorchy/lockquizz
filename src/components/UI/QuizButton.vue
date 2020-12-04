@@ -15,7 +15,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 .quiz-button {
   padding: 10px;
   border-radius: 8px;

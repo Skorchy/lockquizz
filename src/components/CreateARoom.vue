@@ -40,24 +40,29 @@
         />
       </div>
       <div class="car-form-row car-form-button">
-        <button type="button" :disabled="isDisabled" @click="validate()">
+        <quiz-button :disabled="isDisabled" @click="validate()">
           - Créer la salle -
-        </button>
+        </quiz-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { createRoom, checkIfRoomExists } from "../services/roomFunctions.js";
+import { createRoom, checkIfRoomExists } from '../services/roomFunctions.js';
+import QuizButton from '@/components/UI/QuizButton.vue';
+
 export default {
   data() {
     return {
-      roomOwner: "",
-      roomName: "",
-      roomPw: "",
+      roomOwner: '',
+      roomName: '',
+      roomPw: '',
       errorMessage: false,
     };
+  },
+  components: {
+    QuizButton,
   },
   methods: {
     validate() {
@@ -72,9 +77,9 @@ export default {
           const room = createRoom(this.roomName, this.roomPw, this.roomOwner);
           room.then(() => {
             this.$router.push({ path: `/room/${this.roomName}` });
-            this.$store.dispatch("setPlayer", {
+            this.$store.dispatch('setPlayer', {
               name: this.roomOwner,
-              role: "owner",
+              role: 'owner',
               isReady: true,
             });
           });
@@ -84,7 +89,7 @@ export default {
   },
   computed: {
     isDisabled() {
-      if ((this.roomOwner && this.roomName && this.roomPw) == "") {
+      if ((this.roomOwner && this.roomName && this.roomPw) == '') {
         return true;
       } else return false;
     },
@@ -114,7 +119,7 @@ export default {
 }
 
 .car-form-row span {
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
   font-size: 18px;
   color: #ff9010;
   margin-bottom: 3px;
@@ -135,25 +140,11 @@ export default {
 .car-form-button {
   margin: 30px 0;
 }
-.car-form-row button {
-  margin: auto;
-  width: 95%;
-  border-radius: 5px;
-  border: none;
-  background: #ff9010;
-  color: #202124;
-  font-family: "Mukta", sans-serif;
-  font-size: 24px;
-  -webkit-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  -moz-box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-  box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 1);
-
-  @media (min-width: 768px) {
-    width: 60%;
-  }
-}
-
 .car-form-row button:disabled {
-  background: grey;
+  border: 1px solid grey;
+  color: grey;
+}
+.car-form-row button:disabled:hover {
+  background: #0e0e0e;
 }
 </style>
