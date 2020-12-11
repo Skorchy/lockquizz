@@ -6,12 +6,15 @@
         {{ quizName }}
       </option>
     </select>
-    <quiz-button class="owner-modal-validate-button">Valider</quiz-button>
+    <quiz-button class="owner-modal-validate-button" @click="setupQuiz()"
+      >Valider</quiz-button
+    >
   </div>
 </template>
 
 <script>
 import QuizButton from '../UI/QuizButton.vue';
+import { client } from '@/services/contentfulHelper';
 
 export default {
   data() {
@@ -24,6 +27,30 @@ export default {
     quizNames: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    async setupQuiz() {
+      if (this.selectedQuiz == '') {
+        return null;
+      }
+
+      const quizQuestions = await this.fetchQuizData();
+
+      this.$store.dispatch('setupQuiz', {
+        quizName: this.selectedQuiz,
+        roomName: this.$store.state.roomInfos.name,
+        questions: quizQuestions,
+      });
+    },
+    async fetchQuizData() {
+      const quiz = await client.getEntries({
+        'fields.title': this.selectedQuiz,
+        content_type: 'quiz',
+      });
+
+      const quizQuestions = quiz.items[0].fields.questions;
+      return quizQuestions;
     },
   },
 };

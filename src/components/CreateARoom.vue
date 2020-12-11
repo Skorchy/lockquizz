@@ -41,7 +41,7 @@
       </div>
       <div class="car-form-row car-form-button">
         <quiz-button :disabled="isDisabled" @click="validate()">
-          - Créer la salle -
+          Créer la salle
         </quiz-button>
       </div>
     </div>

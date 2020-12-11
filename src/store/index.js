@@ -1,17 +1,16 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
-
-import { db } from "../services/firebaseServices";
-
+import Vue from 'vue';
+import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+import get from 'lodash/get';
+import { db } from '../services/firebaseServices';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [createPersistedState({ key: "quiz" })],
+  plugins: [createPersistedState({ key: 'quiz' })],
   state: {
     playerInfos: {
-      name: "",
-      role: "",
+      name: '',
+      role: '',
       isReady: false,
     },
     roomInfos: null,
@@ -23,8 +22,8 @@ export default new Vuex.Store({
       state.roomInfos.modal.modalType = payload;
     },
     closeModal(state) {
-      state.roomInfos.openModal = false;
-      state.roomInfos.modalType = "";
+      state.roomInfos.modal.openModal = false;
+      state.roomInfos.modal.modalType = '';
     },
     setRoomInfos(state, payload) {
       state.roomInfos = payload;
@@ -37,8 +36,13 @@ export default new Vuex.Store({
     setReady(state) {
       state.playerInfos.isReady = true;
     },
-    setGameLaunched(state) {
-      state.roomInfos.gameLaunched = true;
+    setGameInitiated(state) {
+      state.roomInfos.gameInitiated = true;
+    },
+    setupQuiz(state, payload) {
+      state.roomInfos.quizName = payload.quizName;
+      state.roomInfos.gameInitializationFinished = true;
+      state.roomInfos.questions = payload.questions;
     },
   },
 
@@ -46,48 +50,48 @@ export default new Vuex.Store({
     async fetchRoomInfos(context, payload) {
       const roomName = payload;
 
-      db.collection("rooms")
+      db.collection('rooms')
         .doc(roomName)
         .onSnapshot((roomSnapshot) => {
           const roomInfos = roomSnapshot.data();
 
-          context.commit("setRoomInfos", roomInfos);
+          context.commit('setRoomInfos', roomInfos);
         });
     },
     setPlayer(context, payload) {
-      context.commit("setPlayer", payload);
+      context.commit('setPlayer', payload);
     },
     async setReady(context, payload) {
       const playerNickname = payload.playerNickname;
       const roomName = payload.roomName;
 
       await db
-        .collection("rooms")
+        .collection('rooms')
         .doc(roomName)
         .update({
-          ["players." + playerNickname + ".playerIsReady"]: true,
+          ['players.' + playerNickname + '.playerIsReady']: true,
         });
 
-      context.commit("setReady");
+      context.commit('setReady');
     },
     async launchGame(context, payload) {
       const roomName = payload.roomName;
 
       await db
-        .collection("rooms")
+        .collection('rooms')
         .doc(roomName)
         .update({
-          gameLaunched: true,
+          gameInitiated: true,
         });
 
-      context.commit("setGameLaunched");
+      context.commit('setGameInitiated');
     },
     async openModal(context, payload) {
       const roomName = payload.roomName;
       const modalType = payload.modalType;
 
       await db
-        .collection("rooms")
+        .collection('rooms')
         .doc(roomName)
         .update({
           modal: {
@@ -95,22 +99,47 @@ export default new Vuex.Store({
             modalType: modalType,
           },
         });
-      context.commit("openModal", modalType);
+      context.commit('openModal', modalType);
     },
     async closeModal(context, payload) {
       const roomName = payload.roomName;
 
       await db
-        .collection("rooms")
+        .collection('rooms')
         .doc(roomName)
         .update({
           modal: {
             openModal: false,
-            modalType: "",
+            modalType: '',
           },
         });
 
-      context.commit("closeModal");
+      context.commit('closeModal');
+    },
+    async setupQuiz(context, payload) {
+      const roomName = payload.roomName;
+      const quizName = payload.quizName;
+
+      const questions = payload.questions.map((question) => {
+        return {
+          question: question.fields.title,
+          difficulty: question.fields.difficulty,
+          imgUrl: get(question, 'fields.image.fields.file.url', null),
+          audioUrl: get(question, 'fields.audio.fields.file.url', null),
+        };
+      });
+
+      await db
+        .collection('rooms')
+        .doc(roomName)
+        .update({
+          quizName: quizName,
+          gameInitializationFinished: true,
+          questions: questions,
+        });
+
+      context.commit('setupQuiz', { quizName: quizName, questions: questions });
+      context.commit('closeModal');
     },
   },
   modules: {},

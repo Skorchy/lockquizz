@@ -1,12 +1,19 @@
 <template>
   <div class="room" v-if="$store.state.roomInfos">
     <room-infos :roomInfos="$store.state.roomInfos" />
-    <div class="room-waiting">
+    <div
+      class="room-waiting"
+      v-if="!$store.state.roomInfos.gameInitializationFinished"
+    >
       <waiting
+        v-if="$store.state.roomInfos"
         :roomName="$store.state.roomInfos.name"
         :players="$store.state.roomInfos.players"
         :quizNames="quizNames"
       />
+    </div>
+    <div class="quiz" v-if="$store.state.roomInfos.gameInitializationFinished">
+      <quiz></quiz>
     </div>
   </div>
 </template>
@@ -14,9 +21,9 @@
 <script>
 import RoomInfos from '../components/RoomInfos';
 import Waiting from '../components/Waiting';
+import Quiz from '../components/Quiz';
 
-import { client } from '../services/contentfulHelper';
-import get from 'lodash/get';
+import { client } from '@/services/contentfulHelper';
 
 export default {
   data() {
@@ -29,23 +36,13 @@ export default {
   components: {
     RoomInfos,
     Waiting,
+    Quiz,
   },
   methods: {
     fetchRoomInfos() {
       this.$store.dispatch('fetchRoomInfos', this.roomName);
     },
-    async fetchQuizData() {
-      const entries = await client.getEntries();
 
-      this.quizQuestions = entries.items.map((question) => {
-        return {
-          question: question.fields.title,
-          difficulty: question.fields.difficulty,
-          imgUrl: get(question, 'fields.image.fields.file.url'),
-          audioUrl: get(question, 'fields.audio.fields.file.url'),
-        };
-      });
-    },
     async fetchQuizNames() {
       const entries = await client.getEntries({
         content_type: 'quiz',
@@ -59,7 +56,6 @@ export default {
 
   created() {
     this.fetchRoomInfos();
-    this.fetchQuizData();
     this.fetchQuizNames();
   },
 };
