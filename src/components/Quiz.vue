@@ -1,9 +1,22 @@
 <template>
-  <div class="quiz">{{ $store.state.roomInfos.quizName }}</div>
+  <div class="quiz">
+    <timer :duration="20"></timer>
+  </div>
 </template>
 
 <script>
-export default {};
+import Timer from '@/components/UI/Timer.vue';
+export default {
+  components: {
+    Timer,
+  },
+  data() {
+    return {
+      quizName: this.$store.state.roomInfos.quizName,
+      questions: this.$store.state.roomInfos.questions,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
