@@ -1,6 +1,13 @@
 <template>
   <div class="quiz">
     <timer :duration="20"></timer>
+    <span class="question" style="color:white">
+      {{ questionDisplayed.question }}
+    </span>
+    <audio v-if="questionDisplayed.audioUrl" autoplay controls>
+      <source :src="questionDisplayed.audioUrl" />
+    </audio>
+    <img v-if="questionDisplayed.imgUrl" :src="questionDisplayed.imgUrl" />
   </div>
 </template>
 
@@ -12,9 +19,23 @@ export default {
   },
   data() {
     return {
+      questionNumber: 0,
       quizName: this.$store.state.roomInfos.quizName,
       questions: this.$store.state.roomInfos.questions,
     };
+  },
+  methods: {
+    nextQuestion() {
+      this.questionNumber++;
+    },
+  },
+  computed: {
+    questionDisplayed() {
+      return this.questions[this.questionNumber];
+    },
+  },
+  mounted() {
+    console.log(this.questions);
   },
 };
 </script>
